@@ -19,25 +19,18 @@
 
 package samza.examples.wikipedia.task;
 
-import java.util.Map;
 import org.apache.samza.system.IncomingMessageEnvelope;
 import org.apache.samza.system.OutgoingMessageEnvelope;
 import org.apache.samza.system.SystemStream;
 import org.apache.samza.task.MessageCollector;
 import org.apache.samza.task.StreamTask;
 import org.apache.samza.task.TaskCoordinator;
-import samza.examples.wikipedia.system.WikipediaFeed.WikipediaFeedEvent;
 
-/**
- * This task is very simple. All it does is take messages that it receives, and
- * sends them to a Kafka topic called wikipedia-raw.
- */
 public class WikipediaFeedStreamTask implements StreamTask {
-  private static final SystemStream OUTPUT_STREAM = new SystemStream("kafka", "wikipedia-raw");
-
-  @Override
-  public void process(IncomingMessageEnvelope envelope, MessageCollector collector, TaskCoordinator coordinator) {
-    Map<String, Object> outgoingMap = WikipediaFeedEvent.toMap((WikipediaFeedEvent) envelope.getMessage());
-    collector.send(new OutgoingMessageEnvelope(OUTPUT_STREAM, outgoingMap));
-  }
+    private static final SystemStream OUTPUT_STREAM = new SystemStream("kafka", "topic1");
+    
+    @Override
+    public void process(IncomingMessageEnvelope envelope, MessageCollector collector, TaskCoordinator coordinator) {
+        collector.send(new OutgoingMessageEnvelope(OUTPUT_STREAM, envelope.getMessage()));
+    }
 }

@@ -49,7 +49,8 @@ public class WikipediaStatsStreamTask implements StreamTask, InitableTask, Windo
   @SuppressWarnings("unchecked")
   @Override
   public void process(IncomingMessageEnvelope envelope, MessageCollector collector, TaskCoordinator coordinator) {
-    Map<String, Object> edit = (Map<String, Object>) envelope.getMessage();
+      
+      Map<String, Object> edit = (Map<String, Object>) envelope.getMessage();
     Map<String, Boolean> flags = (Map<String, Boolean>) edit.get("flags");
 
     Integer editsAllTime = store.get("count-edits-all-time");
